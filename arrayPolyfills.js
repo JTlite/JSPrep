@@ -1,85 +1,7 @@
-//Flatten Object
-
-function flattenObj(obj){
-    const result={};
-    for(let i in obj){
-      if(typeof obj[i] !== 'object'){
-        result[i] = obj[i];
-      }else{
-        const temp =flattenObj(obj[i]);
-        for(let j in temp){
-          result[i+"_"+j] = temp[j];
-        }
-      }
-    }
-    
-    return result;
-  }
-  
-  const obj = {
-                name: "Jahnavi",
-                place: {
-                  pincode: "530106",
-                  area: "bellandur"
-                }
-              };
-  
-  console.log(flattenObj(obj));
-
-//-------------------------------
-//Flatten array
-
-  function flattenArray(arr){
-    const result = [];
-    for(i in arr){
-      if(!Array.isArray(arr[i])){
-        result.push(arr[i])
-      }else{
-        result.push(...flattenArray(arr[i]));
-      }
-    }
-    return result;
-    
-  }
-  
-  const arr = [1,[2,3,4],5]
-  console.log(flattenArray(arr));
-
-//---------------------------
-//polyfill for call,apply,bind
-
-const obj1={
-    name:"Jahnavi"
-  }
-  
-  function Intro(area,city){
-    console.log(`I am ${this.name} from ${area},${city}`);
-  }
-  
-  function myCall(context, ...args){
-    context.fn = this;
-    context.fn(...args);
-  }
-  
-  function myApply(context, args){
-    context.fn =this;
-    context.fn(...args);
-  }
-  
-  function myBind(context, args){
-    context.fn=this;
-    return function(...nextArgs){
-      context.fn(...args,...nextArgs);
-    }
-  }
-  
-  Intro.myCall(obj1,"bellandur","banglore")
-  Intro.apply(obj1,["bellandur","banglore"])
-
-  //Array polyfills
+ //Array polyfills
   //forEach
 
-if(!Array.prototype.myForEach){
+  if(!Array.prototype.myForEach){
     Array.prototype.myForEach = function(callback, thisContext){
      
       const array = this;
@@ -196,46 +118,21 @@ if(!Array.prototype.myEvery){
   
   console.log(r);
 
-  //String - find Vowels
+//-------------------------------
+//Flatten array
 
-  if(!String.prototype.myFindVowels){
-    String.prototype.myFindVowels=function(){
-      let results = [];
-      let vowels =['a','e','i','o','u'];
-      for(let i=0;i<this.length;i++){
-        const char = this[i].toLowerCase();
-        if(vowels.includes(char)){
-          results.push(char);
-        }
+function flattenArray(arr){
+    const result = [];
+    for(i in arr){
+      if(!Array.isArray(arr[i])){
+        result.push(arr[i])
+      }else{
+        result.push(...flattenArray(arr[i]));
       }
-      
-      return results;
-      
     }
+    return result;
+    
   }
   
-  const example="jahnavi";
-  const volwes = example.myFindVowels();
-  console.log(volwes);
-
-
-  //String - repeat
-  if(!String.prototype.myRepeat){
-    String.prototype.myRepeat=function(count){
-   
-      let results = '';
-      
-      for(let i=0;i<count;i++){
-        results = results+this;
-      }
-      
-      return results;
-      
-    }
-  }
-  
-  const str="jahnavi";
-  const result = str.myRepeat(3);
-  console.log(result);
-
-
+  const arr = [1,[2,3,4],5]
+  console.log(flattenArray(arr));
